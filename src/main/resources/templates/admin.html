@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="page-shell">
+    <header class="hero-card">
+        <div>
+            <p class="eyebrow">Admin Dashboard</p>
+            <h1>Submitted contact responses</h1>
+            <p class="hero-text">This page reads rows from MySQL and displays them in a clean table.</p>
+        </div>
+        <a class="admin-link" th:href="@{/}">Back to Contact Form</a>
+    </header>
+
+    <section class="table-card">
+        <div class="table-header">
+            <h2>All submissions</h2>
+            <span class="count-badge" th:text="${#lists.size(submissions)} + ' records'"></span>
+        </div>
+
+        <div class="table-wrap" th:if="${!#lists.isEmpty(submissions)}">
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Created At</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="item : ${submissions}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.email}"></td>
+                    <td th:text="${item.subject}"></td>
+                    <td th:text="${item.message}"></td>
+                    <td th:text="${#temporals.format(item.createdAt, 'dd MMM yyyy HH:mm:ss')}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="empty-state" th:if="${#lists.isEmpty(submissions)}">
+            No submissions found yet.
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="page-shell">
+    <header class="hero-card">
+        <div>
+            <p class="eyebrow">Contact Center</p>
+            <h1>Let’s build something great together</h1>
+            <p class="hero-text">Send your message through this stylish contact form. Every submission is saved in MySQL and can be viewed from the admin page.</p>
+        </div>
+        <a class="admin-link" th:href="@{/admin}">Open Admin Page</a>
+    </header>
+
+    <main class="grid-layout">
+        <section class="info-card">
+            <h2>Why contact us?</h2>
+            <ul>
+                <li>Fast response</li>
+                <li>Project inquiries</li>
+                <li>Support and feedback</li>
+            </ul>
+            <div class="contact-pill">Backend: Spring Boot</div>
+            <div class="contact-pill">Database: MySQL</div>
+            <div class="contact-pill">Deployable with Docker</div>
+        </section>
+
+        <section class="form-card">
+            <h2>Send us a message</h2>
+
+            <div th:if="${successMessage}" class="alert success" th:text="${successMessage}"></div>
+
+            <form th:action="@{/contact}" th:object="${contactSubmission}" method="post" class="contact-form">
+                <div class="field">
+                    <label for="name">Full name</label>
+                    <input type="text" id="name" th:field="*{name}" placeholder="Your name" />
+                    <small class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></small>
+                </div>
+
+                <div class="field">
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" th:field="*{email}" placeholder="you@example.com" />
+                    <small class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+                </div>
+
+                <div class="field">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" th:field="*{subject}" placeholder="Subject of your message" />
+                    <small class="error" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></small>
+                </div>
+
+                <div class="field full-width">
+                    <label for="message">Message</label>
+                    <textarea id="message" th:field="*{message}" rows="7" placeholder="Write your message here..."></textarea>
+                    <small class="error" th:if="${#fields.hasErrors('message')}" th:errors="*{message}"></small>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Message</button>
+            </form>
+        </section>
+    </main>
+</div>
+</body>
+</html>
